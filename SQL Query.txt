@@ -1,0 +1,83 @@
+EMPLOYEE TABLE
+
+CREATE TABLE `iftsproject`.`employee` (
+  `employee_id` INT NOT NULL AUTO_INCREMENT,
+  `employee_name` VARCHAR(45) NULL,
+  `employee_username` VARCHAR(45) NULL,
+  `employee_emailid` VARCHAR(45) NULL,
+  `employee_password` VARCHAR(45) NULL,
+  `employee_mobileno` BIGINT(10) NULL,
+  PRIMARY KEY (`employee_id`));
+
+
+INTERVIEW SHCEDULE TABLE
+
+CREATE TABLE `iftsproject`.`interview_schedule` (
+  `interview_schedule_id` INT NOT NULL,
+  `candidate_id` INT NULL,
+  `employee_id` INT NULL,
+  `date` DATE NULL,
+  `round_no` INT NULL,
+  PRIMARY KEY (`interview_schedule_id`),
+  INDEX `candidate_id_idx` (`candidate_id` ASC) VISIBLE,
+  INDEX `employee_id_idx` (`employee_id` ASC) VISIBLE,
+  CONSTRAINT `candidate_id`
+    FOREIGN KEY (`candidate_id`)
+    REFERENCES `iftsproject`.`candidate` (`candidate_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `employee_id`
+    FOREIGN KEY (`employee_id`)
+    REFERENCES `iftsproject`.`employee` (`employee_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+SKILL TABLE
+
+
+
+CREATE TABLE `iftsproject`.`skills` (
+  `skill_id` INT NOT NULL,
+  `skill_name` VARCHAR(45) NULL,
+  `job_role_id` INT NULL,
+  PRIMARY KEY (`skill_id`),
+  INDEX `job_role_id_idx` (`job_role_id` ASC) VISIBLE,
+  CONSTRAINT `job_role_id`
+    FOREIGN KEY (`job_role_id`)
+    REFERENCES `iftsproject`.`jobrole` (`job_role_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+INTERVIWE FEEDBACK TABLE
+
+
+CREATE TABLE `iftsproject`.`interview_feedback` (
+  `feedback_id` INT NOT NULL AUTO_INCREMENT,
+  `candidate_id` INT NULL,
+  `employee_id` INT NULL,
+  `round_no` INT NULL,
+  `skill_id` INT NULL,
+  `rating` INT NULL,
+  `comment` VARCHAR(500) NULL,
+  INDEX `candidate_id_idx` (`candidate_id` ASC) VISIBLE,
+  INDEX `employee_id_idx` (`employee_id` ASC) VISIBLE,
+  INDEX `skill_id_idx` (`skill_id` ASC) VISIBLE,
+  PRIMARY KEY (`feedback_id`),
+  CONSTRAINT `candidate_id`
+    FOREIGN KEY (`candidate_id`)
+    REFERENCES `iftsproject`.`candidate` (`candidate_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `employee_id`
+    FOREIGN KEY (`employee_id`)
+    REFERENCES `iftsproject`.`employee` (`employee_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `skill_id`
+    FOREIGN KEY (`skill_id`)
+    REFERENCES `iftsproject`.`skills` (`skill_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
